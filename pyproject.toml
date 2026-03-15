@@ -1,0 +1,70 @@
+[project]
+name = "luna"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "alembic>=1.18.4",
+    "fastapi[standard]>=0.135.1",
+    "geoalchemy2>=0.18.1",
+    "pydantic>=2.12.5",
+    "pydantic-settings>=2.11.0",
+    "psycopg[binary]>=3.2.10",
+    "sqlalchemy>=2.0.48",
+    "ruff>=0.15.6",
+    "black>=26.3.1",
+    "pytest>=9.0.2",
+]
+
+
+[tool.black]
+line-length = 120
+target-version = ["py312"]
+
+[tool.ruff]
+line-length = 120
+indent-width = 4
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+  "E",   # pycodestyle (ошибки стиля, кроме тех, что делает Black)
+  "F",   # pyflakes (ошибки кода, неиспользуемые переменные и т.п.)
+  "W",   # pycodestyle warnings
+  "I",   # isort (сортировка импортов)
+  "N",   # pep8-naming (имена переменных/классов/функций)
+  "B",   # flake8-bugbear (опасные паттерны, потенциальные баги)
+  "UP",  # pyupgrade (современные конструкции Python)
+  "C4",  # flake8-comprehensions (лучшее использование comprehensions)
+  "SIM", # flake8-simplify (упрощения условий, циклов и т.п.)
+  "T20", # flake8-print (запрет print)
+  "PT",  # flake8-pytest-style (если используешь pytest)
+  "ARG", # неиспользуемые аргументы функций
+]
+# Отключаем правила, которые конфликтуют с Black
+ignore = [
+  "E501",   # длина строки (Black сам режет строки)
+  "W191",   # tabs vs spaces (Black сам фиксит)
+  "E111",   # отступы (Black сам фиксит)
+  "E114",   # отступы блоков (Black сам фиксит)
+  "E117",   # слишком много отступов (Black сам фиксит)
+  "COM812", # trailing comma (Black сам управляет)
+  "ISC001", # неоднозначные split строк (Black сам фиксит)
+]
+
+[tool.ruff.lint.isort]
+combine-as-imports = true
+force-sort-within-sections = true
+
+[tool.ruff.lint.flake8-bugbear]
+# Allow default arguments like, e.g., data: List[str] = fastapi.Query(None)
+extend-immutable-calls = [
+  "fastapi.Depends",
+  "fastapi.Query",
+  "fastapi.Header",
+  "fastapi.Body",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
